@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Umich Student Orgs</title>
+    <meta name="description" content="Explore student organizations from the University of Michigan with text embeddings.">
+
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <div id="header">
+        <h1>Awesome Umich Student Orgs</h1>
+        <small>Data last updated <span id="updated">...</span> | <a href="https://github.com/emiliocantuc/awesome-umich-orgs">Github</a></small>
+        <br><br>
+        <p>
+            Click on an org card to show similar ones (based on their descriptions)
+        </p> 
+        <p id="showing">Showing random orgs</p>
+    </div>
+
+    <br>
+    
+    <div class="card-columns" id="cardList"></div>
+
+    <!-- Import data (slow) -->
+    <script src="data.js"></script>
+
+    <!-- Import utils -->
+    <script src="static/utils.js"></script>
+
+    <script>
+
+        function refresh_list() {
+            let cardList = document.getElementById("cardList");
+            cardList.innerHTML = "";
+            for(let i of showing_list){
+                cardList.appendChild(infoCardHTML(org_data[i]));
+            }
+        }
+
+        function show_similar_to(id){
+            let org = org_data[id];
+            document.getElementById("showing").innerHTML = `Showing orgs similar to<br><a href="https://maizepages.umich.edu/organization/${org['WebsiteKey']}" target="_blank">${org['Name']}</a>`;
+            showing_list = org['Closest'];
+            console.log(showing_list);
+            refresh_list();
+            document.getElementById("header").scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Global vars
+        let showing_list = [];
+
+        // Fill in updated since info
+        document.getElementById("updated").innerHTML = timeSince(new Date(parseInt(updated))) + ' ago';
+
+        // Fill grid with random orgs
+        let random_orgs = Object.keys(org_data);
+        shuffle(random_orgs);
+        random_orgs = random_orgs.slice(0, 50);
+        showing_list = random_orgs;
+        refresh_list();
+    
+    </script>
+
+</body>
+</html>
