@@ -182,4 +182,8 @@ if __name__ == '__main__':
     with open('embeddings.json','w+') as f:
         f.write(json.dumps(store_embeddings))
     
+    # Because why not
+    with open('raw_data.json','w+') as f:
+        f.write(json.dumps(raw_data, indent=4))
+    
     print('Done')
