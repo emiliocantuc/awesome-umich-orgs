@@ -1,5 +1,5 @@
 # awesome umich orgs
-A better way of exploring student organizations from the University of Michigan.
+A better way of exploring student organizations from the University of Michigan. Hosted [here](https://emiliocantuc.github.io/awesome-umich-orgs).
 
 A weekend hack inspired by [@karpathy](https://x.com/karpathy)'s [awesome-movies.life](https://awesome-movies.life). We simply embed the name + description of student orgs and display their nearest neighbors.
 
