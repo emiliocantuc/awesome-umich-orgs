@@ -26,9 +26,17 @@
         <small>Data last updated <span id="updated">...</span> | <a href="https://github.com/emiliocantuc/awesome-umich-orgs">Github</a></small>
         <br><br>
         <p>
-            Click on an org card to show similar ones (based on their descriptions)
+            Click on a card to show similar orgs or search for one
         </p> 
-        <p id="showing">Showing 50 random orgs</p>
+
+        <!-- Search box -->
+        <form id="search-form">
+            <input id="searched-for-org" list="org-datalist" placeholder="Start Typing Org Name" size="35" onfocus="this.value=''" onChange="search_org()" autofocus>
+                <datalist id="org-datalist"></datalist>
+            </input>
+        </form>
+
+        <br><p id="showing">Showing 50 random orgs</p>        
     </div>
 
     <br>
@@ -55,9 +63,18 @@
             let org = org_data[id];
             document.getElementById("showing").innerHTML = `Showing orgs similar to<br><a href="https://maizepages.umich.edu/organization/${org['WebsiteKey']}" target="_blank">${org['Name']}</a>`;
             showing_list = org['Closest'];
-            console.log(showing_list);
             refresh_list();
             document.getElementById("header").scrollIntoView({behavior: 'smooth'});
+        }
+
+        function search_org(){
+            let org_name = document.getElementById("searched-for-org").value;
+            let org_id = org_name.split('(')[1].split(')')[0];
+            // Clear search box
+            document.getElementById("searched-for-org").value = "";
+            if(org_id){
+                show_similar_to(org_id);
+            }
         }
 
         // Global vars
@@ -65,6 +82,14 @@
 
         // Fill in updated since info
         document.getElementById("updated").innerHTML = timeSince(new Date(parseInt(updated))) + ' ago';
+
+        // Fill search box with org names
+        let datalist=document.getElementById("org-datalist");
+        for(let org in org_data){
+            let option=document.createElement("option");
+            option.value=org_data[org]['Name'] + ' (' + org_data[org]['Id'] + ')';
+            datalist.appendChild(option);
+        }             
 
         // Fill grid with random orgs
         let random_orgs = Object.keys(org_data);
