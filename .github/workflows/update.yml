@@ -16,11 +16,11 @@ jobs:
 
     - name: Install pip requirements # Install dependencies
       run: |
-        pip install -r update/requirements.txt
+        pip install -r requirements.txt
 
     - name: Run main
       run: |
-        python3 main -k ${{ secrets.k }} -N 50
+        python3 -u main -k ${{ secrets.k }} -N 50
 
     - name: Commit files
       run: |
