@@ -20,7 +20,7 @@ jobs:
 
     - name: Run main
       run: |
-        python3 -u main -k ${{ secrets.k }} -N 50
+        python3 -u main.py -k ${{ secrets.k }} -N 50
 
     - name: Commit files
       run: |
